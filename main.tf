@@ -35,21 +35,7 @@ locals {
 
 resource "aws_alb_target_group" "target_group" {
   name = "${var.hash_target_group_name ? local.target_group_name : local.old_target_group_name}"
-
-  # port will be set dynamically, but for some reason AWS requires a value
-  port                 = "31337"
-  protocol             = "HTTP"
-  vpc_id               = "${var.vpc_id}"
-  deregistration_delay = "${var.deregistration_delay}"
-
-  health_check {
-    interval            = "${var.health_check_interval}"
-    path                = "${var.health_check_path}"
-    timeout             = "${var.health_check_timeout}"
-    healthy_threshold   = "${var.health_check_healthy_threshold}"
-    unhealthy_threshold = "${var.health_check_unhealthy_threshold}"
-    matcher             = "${var.health_check_matcher}"
-  }
+  target_type = "lambda"
 
   lifecycle {
     create_before_destroy = true
@@ -60,6 +46,11 @@ resource "aws_alb_target_group" "target_group" {
     env       = "${var.env}"
     service   = "${var.env}-${var.component_name}"
   }
+}
+
+resource "aws_lb_target_group_attachment" "target_group_attachment" {
+  target_group_arn = "${aws_lb_target_group.target_group.arn}"
+  target_id        = "${var.lambda_arn}"
 }
 
 locals {

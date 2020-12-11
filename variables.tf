@@ -108,3 +108,9 @@ variable "ttl" {
   description = "Time to live"
   default     = "60"
 }
+
+
+variable "lamba_arn" {
+  description = "the arn of lambda"
+  default     = ""
+}

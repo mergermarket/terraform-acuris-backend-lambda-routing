@@ -53,6 +53,14 @@ resource "aws_lb_target_group_attachment" "target_group_attachment" {
   target_id        = "${var.lambda_arn}"
 }
 
+resource "aws_lambda_permission" "with_lb" {
+  statement_id  = "AllowExecutionFromlb"
+  action        = "lambda:InvokeFunction"
+  function_name = "${var.lambda_arn}"
+  principal     = "elasticloadbalancing.amazonaws.com"
+  source_arn    = "${aws_alb_target_group.target_group.arn}"
+}
+
 locals {
   logical_service_name = "${var.env}-${replace(var.component_name, "/-service$/", "")}"
   full_account_name    = "${var.env == "live" ? "${var.aws_account_alias}prod" : "${var.aws_account_alias}dev"}"

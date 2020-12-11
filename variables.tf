@@ -110,7 +110,7 @@ variable "ttl" {
 }
 
 
-variable "lamba_arn" {
+variable "lambda_arn" {
   description = "the arn of lambda"
   default     = ""
 }

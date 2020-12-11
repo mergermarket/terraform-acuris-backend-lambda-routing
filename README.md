@@ -1,9 +1,9 @@
 Description
 -----------
 
-[![Build Status](https://travis-ci.org/mergermarket/terraform-acuris-backend-service-routing.svg?branch=master)](https://travis-ci.org/mergermarket/terraform-acuris-backend-service-routing)
+[![Build Status](https://travis-ci.org/mergermarket/terraform-acuris-backend-lambda-routing.svg?branch=master)](https://travis-ci.org/mergermarket/terraform-acuris-backend-lambda-routing)
 
-This module creates the DNS and routing rule for a backend service. It's an
+This module creates the DNS and routing rule for a backend lambda. It's an
 opinionated module that forms the DNS name from the `env` (environment name),
 `name` (short name for the service - typically with the "-service" suffix
 removed) and `domain`.
@@ -36,14 +36,8 @@ each service:
       alb_listener_arn = "${module.backend_router.alb_listener_arn}"
       alb_dns_name     = "${module.backend_router.alb_dns_name}"
       vpc_id           = "${var.platform_config["vpc"]}"
+      aws_account_alias = "alias"
+      backend_dns       = "backend.com"
+      lambda_arn        = "${var.lambda_arn}"
     }
 ```
-Then put the ARN for the target group of your service in each environment into
-`config/qa.json`, `config/aslive.json`, ...:
-
-    {
-        "target_groups": {
-            "notifications-profile-matching-service": "arn:of:the:qa:notifications-profile-matching-service:target:group"
-        }
-    }
-

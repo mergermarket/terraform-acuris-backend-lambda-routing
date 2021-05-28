@@ -1,7 +1,7 @@
 Description
 -----------
 
-[![Build Status](https://travis-ci.org/mergermarket/terraform-acuris-backend-lambda-routing.svg?branch=master)](https://travis-ci.org/mergermarket/terraform-acuris-backend-lambda-routing)
+[![Build Status](https://travis-ci.com/mergermarket/terraform-acuris-backend-lambda-routing.svg?branch=master)](https://travis-ci.com/mergermarket/terraform-acuris-backend-lambda-routing)
 
 This module creates the DNS and routing rule for a backend lambda. It's an
 opinionated module that forms the DNS name from the `env` (environment name),
